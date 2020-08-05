@@ -6,33 +6,32 @@ from pdf2image import convert_from_path
 import os 
 import re
 import PyPDF2 as pdf2
+import json
+from types import SimpleNamespace
+
+with open('configuration.json') as f:
+  config = json.load(f)
+  config = SimpleNamespace(**config)
 
 def guardar(fecha,matricula,imagen):
+    fecha = "/".join(fecha)
     au="au.pdf"
     nombre=matricula+".pdf"
-    os.chdir("./"+fecha)
-
-    page.save(au,'PDF') 
-    
-    print("Existe carpeta?"+ str(os.path.exists(nombre)))
-
-    if os.path.exists(nombre):
+    path = "/".join((config.invoice_path, fecha, nombre))
+    au_path = "/".join((config.invoice_path, fecha, au))
+    page.save(au_path,'PDF') 
+    print("Existe carpeta?"+ str(os.path.exists(path)))
+    if os.path.exists(path):
         merger = pdf2.PdfFileMerger()
-        foo=open(au, 'rb')
-        merger.append(pdf2.PdfFileReader(open(nombre, 'rb')))
+        foo=open(au_path, 'rb')
+        merger.append(pdf2.PdfFileReader(open(path, 'rb')))
         merger.append(pdf2.PdfFileReader(foo))
-        merger.write(nombre)
-        
+        merger.write(path)
         foo.close()
-        os.remove(au)
+        os.remove(au_path)
     else:
-        print("Nueva Matricula " + nombre )
-        os.rename(au,nombre) 
-
-    
-    os.chdir("..")
-
-
+        print("Nueva Matricula " + path )
+        os.rename(au_path,path) 
 
 # Path of the pdf 
 PDF_file = "example.pdf"
@@ -40,7 +39,7 @@ PDF_file = "example.pdf"
 ''' 
 Part #1 : Converting PDF to images 
 '''
-if os.name == 'nt': pytesseract.pytesseract.tesseract_cmd = 'C:/Users/jlf799/AppData/Local/Tesseract-OCR/tesseract.exe'
+if os.name == 'nt': pytesseract.pytesseract.tesseract_cmd = config["tesseract"]
 # Store all the pages of the PDF in a variable 
 pages = convert_from_path(PDF_file, 500) 
 
@@ -51,14 +50,11 @@ image_counter = 1
 # Iterate through all the pages stored above 
 for page in pages: 
     err=False
-
     imageMatricula = "page_"+str(image_counter)+"matricula"+".jpg"
     imageFecha = "page_"+str(image_counter)+"fecha"+".jpg"
-    
     width, height = page.size
     matricula = page.crop((0, 2700, 2800, 3000)) 
     fecha = page.crop((width-600,0,width,400))  
-
 
     # Increment the counter to update filename 
     image_counter = image_counter + 1
@@ -71,28 +67,29 @@ for page in pages:
     #Busca fecha
     match=re.search(r'(\d+/\d+/\d+)',text)
     date=match.group(1)
-    date=date.replace('/', '')
-    print("Fecha: "+ date)
+    date = date.split("/")
+    print(date)
+    rev_date = date
+    rev_date.reverse()
 
-
-    path="./" + date
     try:
-        os.mkdir(path)
+        path = config.invoice_path
+        if not os.path.exists(path): os.mkdir(path)
+        for dig in rev_date:
+            path = "/".join((path, dig))
+            if not os.path.exists(path):os.mkdir(path)
     except OSError:
         print ("Creation of the directory %s failed" % path)
     else:
         print ("Successfully created the directory %s " % path)
     
-
     try:
         match=re.search(r'(\s+\d+\d+\d+\d+[A-Z]+[A-Z]+[A-Z])',text)
         matricula=match.group(1)
-        print(matricula, "------------")
+        print(matricula)
     except AttributeError:
         err = True
         matricula="errores"
-        
-        
+             
     print("Matricula: %s" % matricula)
-
     guardar(date,matricula,page)
