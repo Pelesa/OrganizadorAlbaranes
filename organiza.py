@@ -13,7 +13,6 @@ def guardar(fecha,matricula,imagen):
     os.chdir("./"+fecha)
 
     page.save(au,'PDF') 
-    output = pdf2.PdfFileWriter()
     
     print("Existe carpeta?"+ str(os.path.exists(nombre)))
 
@@ -41,7 +40,7 @@ PDF_file = "example.pdf"
 ''' 
 Part #1 : Converting PDF to images 
 '''
-pytesseract.pytesseract.tesseract_cmd = 'C:/Users/jlf799/AppData/Local/Tesseract-OCR/tesseract.exe'
+if os.name == 'nt': pytesseract.pytesseract.tesseract_cmd = 'C:/Users/jlf799/AppData/Local/Tesseract-OCR/tesseract.exe'
 # Store all the pages of the PDF in a variable 
 pages = convert_from_path(PDF_file, 500) 
 
@@ -88,6 +87,7 @@ for page in pages:
     try:
         match=re.search(r'(\s+\d+\d+\d+\d+[A-Z]+[A-Z]+[A-Z])',text)
         matricula=match.group(1)
+        print(matricula, "------------")
     except AttributeError:
         err = True
         matricula="errores"
