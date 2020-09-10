@@ -1,50 +1,72 @@
-from tkinter import *
-from PIL import Image, ImageTk
+import pygame
+import sys
+from PIL import Image
+pygame.init()
 
-def main():
-    root = Tk()
-    root.title = ("Slot Machine")
-    canvas = Canvas(root, width=1500, height=800)
-    canvas.pack()
+def displayImage(screen, px, topleft, prior):
+    # ensure that the rect always has positive width, height
+    x, y = topleft
+    width =  pygame.mouse.get_pos()[0] - topleft[0]
+    height = pygame.mouse.get_pos()[1] - topleft[1]
+    if width < 0:
+        x += width
+        width = abs(width)
+    if height < 0:
+        y += height
+        height = abs(height)
 
-    im = Image.open("page_1.jpg")
-    wheelw = im.size[0] #width of source image
-    wheelh = im.size[1] #height of source image
-    showsize = 400 #amount of source image to show at a time - part of 'wheel' you can see
-    speed = 3 #spin speed of wheel
-    bx1 = 250 #Box 1 x - where the box will appear on the canvas
-    by = 250 #box 1 y
-    numberofspins = 100  #spin a few times through before stopping
+    # eliminate redundant drawing cycles (when mouse isn't moving)
+    current = x, y, width, height
+    if not (width and height):
+        return current
+    if current == prior:
+        return current
 
-    cycle_period = 0  #amount of pause between each frame
+    # draw transparent box and blit it onto canvas
+    screen.blit(px, px.get_rect())
+    im = pygame.Surface((width, height))
+    im.fill((128, 128, 128))
+    pygame.draw.rect(im, (32, 32, 32), im.get_rect(), 1)
+    im.set_alpha(128)
+    screen.blit(im, (x, y))
+    pygame.display.flip()
 
-    for spintimes in range(1,numberofspins):
-        for y in range(wheelh,showsize,-speed):  #spin to end of image, from bottom to top
+    # return current box extents
+    return (x, y, width, height)
+def setup(path):
+    px = pygame.image.load(path)
+    screen = pygame.display.set_mode( px.get_rect()[2:] )
+    screen.blit(px, px.get_rect())
+    pygame.display.flip()
+    return screen, px
 
-            cropped = im.crop((0, y-showsize, wheelw, y))  #crop which part of wheel is seen
-            tk_im = ImageTk.PhotoImage(cropped)
-            canvas.create_image(bx1, by, image=tk_im)  #display image
+def mainLoop(screen, px):
+    topleft = bottomright = prior = None
+    n=0
+    while n!=1:
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONUP:
+                if not topleft:
+                    topleft = event.pos
+                else:
+                    bottomright = event.pos
+                    n=1
+        if topleft:
+            prior = displayImage(screen, px, topleft, prior)
+    return ( topleft + bottomright )
 
-            canvas.update()                 # This refreshes the drawing on the canvas.
-            canvas.after(cycle_period)       # This makes execution pause
+if __name__ == "__main__":
+    input_loc = 'page_1.jpg'
+    output_loc = 'out.png'
+    screen, px = setup(input_loc)
+    left, upper, right, lower = mainLoop(screen, px)
 
-        for y in range (speed,showsize,speed):  #add 2nd image to make spin loop
-            cropped1 = im.crop((0, 0, wheelw, showsize-y)) #img crop 1
-            cropped2 = im.crop((0, wheelh - y, wheelw, wheelh)) #img crop 2
-            tk_im1 = tk_im2 = None
-            tk_im1 = ImageTk.PhotoImage(cropped1)
-            tk_im2 = ImageTk.PhotoImage(cropped2)
-
-            #canvas.delete(ALL)
-            canvas.create_image(bx1, by, image=tk_im2)  ###THIS IS WHERE THE PROBLEM IS..
-            canvas.create_image(bx1, by + y, image=tk_im1)  ###PROBLEM
-
-            #For some reason these 2 lines are overdrawing where they should be.  as y increases, the cropped img size should decrease, but doesn't
-
-            canvas.update()                 # This refreshes the drawing on the canvas
-            canvas.after(cycle_period)       # This makes execution pause
-
-    root.mainloop()
-
-if __name__ == '__main__':
-    main()
+    # ensure output rect always has positive width, height
+    if right < left:
+        left, right = right, left
+    if lower < upper:
+        lower, upper = upper, lower
+    im = Image.open(input_loc)
+    im = im.crop(( left, upper, right, lower))
+    pygame.display.quit()
+    im.save(output_loc)
