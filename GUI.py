@@ -1,6 +1,9 @@
 import pygame
 import sys
 from PIL import Image
+
+#Scrollbar https://github.com/edward344/scrollbar/blob/master/scrollbar.py o https://pygame-menu.readthedocs.io/en/latest/_source/widgets_scrollbar.html
+
 pygame.init()
 
 def displayImage(screen, px, topleft, prior):
