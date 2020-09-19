@@ -67,10 +67,11 @@ def guardar(albaran):
             merger.write(path)
             foo.close()
             os.remove(au_path)
-
+        else:
+            os.remove(au_path)
     else:
         data[albaran.matricula] = {"horas": [albaran.hora]}
-        print("Nueva Matricula " + path )
+        #print("Nueva Matricula " + path )
         os.rename(au_path,path) 
 
     with open(json_path,"r+") as file:
@@ -118,25 +119,34 @@ for page in pages:
     rev_date = date
     rev_date.reverse()
 
-    #Busca Matricula
-    try:
-        match=re.search(r'(\s+\d+\d+\d+\d+[A-Z]+[A-Z]+[A-Z])',matriculaTXT)
-        matricula=match.group(1)
-        
-    except AttributeError:
-        err = True
-        matricula="errores"    
-    
-    
-    #TODO Excepciones hora y fecha??
-
     #Busca Hora
     match=re.search(r'(\d+:\d+:\d+)',horaTXT)
     hora=match.group(1)
-        
 
+    #Busca Matricula
+    try:
+        match=re.search(r'(\s+\d+\d+\d+\d+[A-Z]+[A-Z]+[A-Z])',matriculaTXT)
+        matricula=match.group(1).split(" ")[1]
+        
+    except AttributeError:
+        err = True
+        matricula="errores"
+        try:
+            match=re.search(r'(\s+[O]+[0]+\d+\d+\d+[A-Z]+[A-Z]+[A-Z])',matriculaTXT)
+            matricula=match.group(1).split("O")[1]
+            err = False
+        except AttributeError:
+            err = True
+            print("Error matricula :"+ str(image_counter-1)+" : \n" + matriculaTXT)
+            matricula="errores"
+
+    
+    
+    #TODO Excepciones hora y fecha??       
+    
     albaran = Albaran(matricula,date,hora)
-    print(albaran)
+    if err:
+        print(albaran)
 
     #Creamos las carpetas
     try:
@@ -147,8 +157,8 @@ for page in pages:
             if not os.path.exists(path):os.mkdir(path)
     except OSError:
         print ("Creation of the directory %s failed" % path)
-    else:
-        print ("Successfully created the directory %s " % path)
+    # else:
+    #     print ("Successfully created the directory %s " % path)
     
     guardar(albaran)
 

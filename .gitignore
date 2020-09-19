@@ -141,3 +141,5 @@ cython_debug/
 #
 .vscode
 *.pdf
+data.json
+mail.json
