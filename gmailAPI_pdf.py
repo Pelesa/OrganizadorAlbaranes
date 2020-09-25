@@ -6,8 +6,9 @@ from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 
+
 # If modifying these scopes, delete the file token.pickle.
-SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
+SCOPES = ['https://mail.google.com/']
 
 
 def main(pathPDFS):
@@ -35,11 +36,26 @@ def main(pathPDFS):
 
     service = build('gmail', 'v1', credentials=creds)
 
+    # Call the Gmail API
+    results = service.users().labels().list(userId='me').execute()
+    labels = results.get('labels', [])
+
+    if not labels:
+        print('No labels found.')
+    else:
+        print('Labels:')
+        for label in labels:
+            print(label['name'])
+
+
+
+
     try:
         service = build('gmail', 'v1', credentials=creds)
-        results = service.users().messages().list(userId='me', labelIds=['INBOX']).execute() 
+        results = service.users().messages().list(userId='me', labelIds=['UNREAD']).execute() 
         messages = results.get('messages', [])
         for message in messages:
+
             msg = service.users().messages().get(userId='me', id=message['id']).execute()
             for part in msg['payload'].get('parts', ''):
 
@@ -61,6 +77,16 @@ def main(pathPDFS):
                     with open(path, 'wb') as f:
                         f.write(file_data)
                         f.close()
+
+            #Mover mensaje a Label:Guardados
+            print(service.users().messages().get(userId='me', id=message['id']).execute()["labelIds"])
+
+            #service.users().messages().modify(userId='me', id=message['id'],body={'removeLabelIds':['UNREAD']}).execute()
+
+            service.users().messages().modify(userId='me', id=message['id'],body={'addLabelIds':['Guardados']}).execute()
+            
+            print(service.users().messages().get(userId='me', id=message['id']).execute()["labelIds"])
+
     except Exception as error:
         print(error)
 

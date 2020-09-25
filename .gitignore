@@ -144,3 +144,4 @@ cython_debug/
 data.json
 mail.json
 credentials.json
+token.pickle
