@@ -174,4 +174,3 @@ def main(PDF_file):
         
         guardar(albaran)
 
-main("pturee.pdf")
