@@ -78,14 +78,11 @@ def main(pathPDFS):
                         f.write(file_data)
                         f.close()
 
-            #Mover mensaje a Label:Guardados
-            print(service.users().messages().get(userId='me', id=message['id']).execute()["labelIds"])
+            #Leer mensaje
 
-            #service.users().messages().modify(userId='me', id=message['id'],body={'removeLabelIds':['UNREAD']}).execute()
+            service.users().messages().modify(userId='me', id=message['id'],body={'removeLabelIds':['UNREAD']}).execute()
 
-            service.users().messages().modify(userId='me', id=message['id'],body={'addLabelIds':['Guardados']}).execute()
-            
-            print(service.users().messages().get(userId='me', id=message['id']).execute()["labelIds"])
+            #print(service.users().messages().get(userId='me', id=message['id']).execute()["labelIds"])
 
     except Exception as error:
         print(error)

@@ -85,6 +85,8 @@ def main(PDF_file):
     ''' 
     Part #1 : Converting PDF to images 
     '''
+
+
     if os.name == 'nt': pytesseract.pytesseract.tesseract_cmd = config.tesseract
     # Store all the pages of the PDF in a variable 
     pages = convert_from_path(PDF_file, 600) 
@@ -111,15 +113,24 @@ def main(PDF_file):
         horaTXT=str(pytesseract.image_to_string(hora))
     
         #Busca fecha
-        match=re.search(r'(\d+/\d+/\d+)',fechaTXT)
-        date=match.group(1)
-        date = date.split("/")
-        rev_date = date
-        rev_date.reverse()
+        try:
+            match=re.search(r'(\d+/\d+/\d+)',fechaTXT)
+            date=match.group(1)
+            date = date.split("/")
+            rev_date = date
+            rev_date.reverse()
+        except AttributeError:
+            date = "00/00/00"
+            date = date.split("/")
+            rev_date = date
+            rev_date.reverse()
 
         #Busca Hora
-        match=re.search(r'(\d+:\d+:\d+)',horaTXT)
-        hora=match.group(1)
+        try:
+            match=re.search(r'(\d+:\d+:\d+)',horaTXT)
+            hora=match.group(1)
+        except AttributeError:
+            hora= "00:00:00"
 
         #Busca Matricula
         try:
@@ -138,9 +149,12 @@ def main(PDF_file):
                 print("Error matricula :"+ str(image_counter-1)+" : \n" + matriculaTXT)
                 matricula="errores"
 
-        
-        
-        #TODO Excepciones hora y fecha??       
+        #Escalamos la imagen
+        basewidth = 600
+        wpercent = (basewidth/float(page.size[0]))
+        hsize = int((float(page.size[1])*float(wpercent)))
+        page = page.resize((basewidth,hsize),Image.ANTIALIAS )
+             
         
         albaran = Albaran(matricula,date,hora,page)
         if err:
@@ -160,4 +174,4 @@ def main(PDF_file):
         
         guardar(albaran)
 
-
+main("pturee.pdf")
