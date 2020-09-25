@@ -143,3 +143,4 @@ cython_debug/
 *.pdf
 data.json
 mail.json
+credentials.json
