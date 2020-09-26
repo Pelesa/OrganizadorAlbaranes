@@ -15,6 +15,10 @@ def main(pathPDFS):
     """Shows basic usage of the Gmail API.
     Lists the user's Gmail labels.
     """
+    if not os.path.exists(pathPDFS):os.mkdir(pathPDFS)
+
+
+
     creds = None
     # The file token.pickle stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
@@ -36,19 +40,6 @@ def main(pathPDFS):
 
     service = build('gmail', 'v1', credentials=creds)
 
-    # Call the Gmail API
-    results = service.users().labels().list(userId='me').execute()
-    labels = results.get('labels', [])
-
-    if not labels:
-        print('No labels found.')
-    else:
-        print('Labels:')
-        for label in labels:
-            print(label['name'])
-
-
-
 
     try:
         service = build('gmail', 'v1', credentials=creds)
@@ -69,7 +60,7 @@ def main(pathPDFS):
                     file_data = base64.urlsafe_b64decode(data.encode('UTF-8'))
 
                     filename = part['filename']
-                    print(filename)
+                    print("Descargado del correo: "+filename)
                     if not os.path.exists(pathPDFS): os.mkdir(pathPDFS)
                     path = os.path.join(pathPDFS, filename)
                     
