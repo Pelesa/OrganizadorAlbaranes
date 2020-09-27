@@ -73,7 +73,7 @@ def mainLoop(screen, px):
     return ( topleft + bottomright )
 
 if __name__ == "__main__":
-    input_loc = 'page_1.jpg'
+    input_loc = 'page1.jpg'
     output_loc = 'out.png'
     screen, px = setup(input_loc)
     print(screen, px)
