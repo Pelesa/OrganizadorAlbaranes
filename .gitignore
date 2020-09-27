@@ -145,3 +145,5 @@ data.json
 mail.json
 credentials.json
 token.pickle
+poppler-0.68.0/
+Tesseract-OCR/

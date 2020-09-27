@@ -78,17 +78,19 @@ def guardar(albaran):
         json.dump(data, file)
 
 
-
-
 def main(PDF_file):
     ''' 
     Part #1 : Converting PDF to images 
     '''
 
-
-    if os.name == 'nt': pytesseract.pytesseract.tesseract_cmd = config.tesseract
+    if os.name == 'nt': 
+        pytesseract.pytesseract.tesseract_cmd = config.tesseract 
+        poppler_path = config.poppler
+        page = convert_from_path(PDF_file, 600,poppler_path=poppler_path) 
+    else:
+        page = convert_from_path(PDF_file, 600) 
     # Store all the pages of the PDF in a variable 
-    page = convert_from_path(PDF_file, 600) 
+    
     page=page[0]
 
 
