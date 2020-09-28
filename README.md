@@ -14,7 +14,7 @@ Resumen de cada uno de los Scripts:
 
 En el caso probado, necesitabamos seleccionar la fecha, hora y la matricula del Albaran para usarlos como informacion de cara a ordenarlo, por lo que transformamos el pdf a imagen y de ahi "recortamos" las zonas necesarias y aplicabamos el OCR en esos recortes. 
 De cara a obtener correctamente las areas a analizar se puede hacer uso de _TEST/testRecorte.py
-![Build Status]( http://drive.google.com/uc?export=view&id=1R4HY5D7VeGRYYfQAakpP09sO2RNGb_IW)
+![Caso Base]( https://doc-0k-8c-docs.googleusercontent.com/docs/securesc/nqkmsieps59cfc8s65ccj2a8hpp1c1m5/jqluuq7nb4lvfjnclr4bk9q4fsmidknh/1601295075000/09318324433644316665/09318324433644316665/1R4HY5D7VeGRYYfQAakpP09sO2RNGb_IW?e=view&authuser=0)
 
 
 
