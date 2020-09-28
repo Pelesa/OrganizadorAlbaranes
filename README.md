@@ -13,7 +13,7 @@ Resumen de cada uno de los Scripts:
 
 
 En el caso probado, necesitabamos seleccionar la fecha, hora y la matricula del Albaran para usarlos como informacion de cara a ordenarlo, por lo que transformamos el pdf a imagen y de ahi "recortamos" las zonas necesarias y aplicabamos el OCR en esos recortes. 
-De cara a obtener correctamente las areas a analizar se puede hacer uso de _TEST/testRecorte.py
+De cara a obtener correctamente las areas a analizar se puede hacer uso de (TEST/testRecorte.py)
 ![Caso Base](TEST/imageREADME.jpg)
 
 
@@ -39,7 +39,7 @@ _En Ubuntu creo que no deberia de haber problemas y simplemente con instalar los
 
 
 * **Jose Lesarri Fernandez** - *Trabajo Inicial* - [Pelesa](https://github.com/Pelesa)
-* **Los panas** - *Apoyo moral* - 
+* **Los panas** - *Apoyo moral y buenos consejos* - 
 
 También puedes mirar la lista de todos los [contribuyentes](https://github.com/Pelesa/OrganizadorFacturas/graphs/contributors) quíenes han participado en este proyecto. 
 
