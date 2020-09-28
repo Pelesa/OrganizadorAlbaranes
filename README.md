@@ -37,7 +37,6 @@ _En Ubuntu creo que no deberia de haber problemas y simplemente con instalar los
 
 ## Autores ✒️
 
-_Menciona a todos aquellos que ayudaron a levantar el proyecto desde sus inicios_
 
 * **Jose Lesarri Fernandez** - *Trabajo Inicial* - [Pelesa](https://github.com/Pelesa)
 * **Los panas** - *Apoyo moral* - 
