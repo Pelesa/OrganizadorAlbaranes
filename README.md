@@ -42,7 +42,7 @@ _Menciona a todos aquellos que ayudaron a levantar el proyecto desde sus inicios
 * **Jose Lesarri Fernandez** - *Trabajo Inicial* - [Pelesa](https://github.com/Pelesa)
 * **Los panas** - *Apoyo moral* - 
 
-También puedes mirar la lista de todos los [contribuyentes](https://github.com/your/project/contributors) quíenes han participado en este proyecto. 
+También puedes mirar la lista de todos los [contribuyentes](https://github.com/Pelesa/OrganizadorFacturas/graphs/contributors) quíenes han participado en este proyecto. 
 
 ## Licencia 📄
 
