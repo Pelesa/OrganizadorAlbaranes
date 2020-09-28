@@ -1,104 +1,57 @@
-# Título del Proyecto
+# Organizador de Albaranes
 
-_Organizador de Albaranes_
+_Este proyecto está realizado para una empresa en particular pero tratare de explicar como modificarlo para poder hacer uso en otras circunstancias._
 
 ## Comenzando 🚀
 
-_
-Este programa permite ejecutarse tanto en Ubuntu como en Windows, en windows será necesario tener en configuration.json el path de Tesseract y Poppler. Informacion de la descarga en **Deployment**
-NOTA: Este es un proyecto especifico para un tipo de Albaranes de una empresa, es necesario actualizar tanto los "recuadros" de donde quieres extraer la informacion así como crear un nuevo token de la API de google  _
+Este script permite ejecutarse tanto en Ubuntu como en Windows, en Windows será necesario tener en configuration.json el path de Tesseract y Poppler. Mas informacion de la descarga en **Deployment**
 
-Mira **Deployment** para conocer como desplegar el proyecto.
+Resumen de cada uno de los Scripts:
+ - gmailAPI_pdf.py Se encarga de descargar mediante la API de Gmail los PDF adjuntos a los correos no leidos, para esto es necesario crear el token y conectar una cuenta. (Mas info en **Deployement**) 
+ - organiza.py recibe un pdf, lo convierte a imagen y lo ordena en las carpetas correspondientes
+ - main.py se encarga de llamar a gmailAPI_pdf.py, convertir cada PDF en un PDF por hoja y mandarselos a organiza.py
+
+
+En el caso probado, necesitabamos seleccionar la fecha, hora y la matricula del Albaran para usarlos como informacion de cara a ordenarlo, por lo que transformamos el pdf a imagen y de ahi "recortamos" las zonas necesarias y aplicabamos el OCR en esos recortes. 
+De cara a obtener correctamente las areas a analizar se puede hacer uso de _TEST/testRecorte.py
+![Build Status]( http://drive.google.com/uc?export=view&id=1R4HY5D7VeGRYYfQAakpP09sO2RNGb_IW)
+
+
 
 
 ### Pre-requisitos 📋
 
-_Que cosas necesitas para instalar el software y como instalarlas_
+* [PyPDF2](https://pypi.org/project/PyPDF2/) - Para trabajar con PDFs
+* [Pillow](https://pypi.org/project/Pillow/) - Trabajar con imagenes
+* [Pytesseract](https://pypi.org/project/pytesseract/) - OCR (Necesario installar Tesseract-OCR en Windows info en **Deployment**)
+* [pdf2image](https://pypi.org/project/pdf2image/) - Convertir pdfs a imagen (Es necesario instalar poppler, Windows info en **Deployment**)
+* [GoogleAPI](https://developers.google.com/docs/api/quickstart/python) - Enlace al Quickstart para aprender lo basico
+* [Progress](https://pypi.org/project/progress/) - Barra de progreso para parecer profesionales
 
-```
-Da un ejemplo
-```
-
-### Instalación 🔧
-
-_Una serie de ejemplos paso a paso que te dice lo que debes ejecutar para tener un entorno de desarrollo ejecutandose_
-
-_Dí cómo será ese paso_
-
-```
-Da un ejemplo
-```
-
-_Y repite_
-
-```
-hasta finalizar
-```
-
-_Finaliza con un ejemplo de cómo obtener datos del sistema o como usarlos para una pequeña demo_
-
-## Ejecutando las pruebas ⚙️
-
-_Explica como ejecutar las pruebas automatizadas para este sistema_
-
-### Analice las pruebas end-to-end 🔩
-
-_Explica que verifican estas pruebas y por qué_
-
-```
-Da un ejemplo
-```
-
-### Y las pruebas de estilo de codificación ⌨️
-
-_Explica que verifican estas pruebas y por qué_
-
-```
-Da un ejemplo
-```
 
 ## Despliegue 📦
 
-_Agrega notas adicionales sobre como hacer deploy_
-
-## Construido con 🛠️
-
-_Menciona las herramientas que utilizaste para crear tu proyecto_
-
-* [pytesseract](https://github.com/madmaze/pytesseract) - OCR utilizado
-* [Poppler](https://poppler.freedesktop.org/) - Convertir pdfs en imagen
-
-## Contribuyendo 🖇️
-
-Por favor lee el [CONTRIBUTING.md](https://gist.github.com/villanuevand/xxxxxx) para detalles de nuestro código de conducta, y el proceso para enviarnos pull requests.
-
-## Wiki 📖
-
-Puedes encontrar mucho más de cómo utilizar este proyecto en nuestra [Wiki](https://github.com/tu/proyecto/wiki)
-
-## Versionado 📌
-
-Usamos [SemVer](http://semver.org/) para el versionado. Para todas las versiones disponibles, mira los [tags en este repositorio](https://github.com/tu/proyecto/tags).
+_En Ubuntu creo que no deberia de haber problemas y simplemente con instalar los paquetes anteriores seía suficiente, no obstante para Windows es necesario descargar:_
+* [Tesseract](https://github.com/UB-Mannheim/tesseract/wiki) En un principio instalando esto y cambiando el configuration.json con la ruta de tesseract no deberia haber problema.
+* [Poppler](https://poppler.freedesktop.org/) He utilizado la version 0.68.0_x86 que se puede descargar en [esta pagina](https://blog.alivate.com.au/poppler-windows/) simplemente descomprimir y asignar la ruta en configuration.json 
 
 ## Autores ✒️
 
 _Menciona a todos aquellos que ayudaron a levantar el proyecto desde sus inicios_
 
-* **Andrés Villanueva** - *Trabajo Inicial* - [villanuevand](https://github.com/villanuevand)
-* **Fulanito Detal** - *Documentación* - [fulanitodetal](#fulanito-de-tal)
+* **Jose Lesarri Fernandez** - *Trabajo Inicial* - [Pelesa](https://github.com/Pelesa)
+* **Los panas** - *Apoyo moral* - 
 
 También puedes mirar la lista de todos los [contribuyentes](https://github.com/your/project/contributors) quíenes han participado en este proyecto. 
 
 ## Licencia 📄
 
-Este proyecto está bajo la Licencia (Tu Licencia) - mira el archivo [LICENSE.md](LICENSE.md) para detalles
+Este proyecto está bajo la Licencia (GNU) - mira el archivo [LICENSE.md](LICENSE.md) para detalles
 
 ## Expresiones de Gratitud 🎁
 
 * Comenta a otros sobre este proyecto 📢
 * Invita una cerveza 🍺 o un café ☕ a alguien del equipo. 
-* Da las gracias públicamente 🤓.
-* etc.
 
 
 
