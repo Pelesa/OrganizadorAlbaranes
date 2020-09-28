@@ -7,13 +7,14 @@ _Este proyecto está realizado para una empresa en particular pero tratare de ex
 Este script permite ejecutarse tanto en Ubuntu como en Windows, en Windows será necesario tener en configuration.json el path de Tesseract y Poppler. Mas informacion de la descarga en **Deployment**
 
 Resumen de cada uno de los Scripts:
- - gmailAPI_pdf.py Se encarga de descargar mediante la API de Gmail los PDF adjuntos a los correos no leidos, para esto es necesario crear el token y conectar una cuenta. (Mas info en **Deployement**) 
- - organiza.py recibe un pdf, lo convierte a imagen y lo ordena en las carpetas correspondientes
- - main.py se encarga de llamar a gmailAPI_pdf.py, convertir cada PDF en un PDF por hoja y mandarselos a organiza.py
+ - [gmailAPI_pdf.py](gmailAPI_pdf.py) Se encarga de descargar mediante la API de Gmail los PDF adjuntos a los correos no leidos, para esto es necesario crear el token y conectar una cuenta. (Mas info en **Deployement**) 
+ - [organiza.py](organiza.py) recibe un pdf, lo convierte a imagen y lo ordena en las carpetas correspondientes
+ - [main.py](main.py) se encarga de llamar a gmailAPI_pdf.py, convertir cada PDF en un PDF por hoja y mandarselos a organiza.py
 
 
 En el caso probado, necesitabamos seleccionar la fecha, hora y la matricula del Albaran para usarlos como informacion de cara a ordenarlo, por lo que transformamos el pdf a imagen y de ahi "recortamos" las zonas necesarias y aplicabamos el OCR en esos recortes. 
 De cara a obtener correctamente las areas a analizar se puede hacer uso de [testRecorte.py](TEST/testRecorte.py)
+
 ![Caso Base](TEST/imageREADME.jpg)
 
 
@@ -27,12 +28,12 @@ De cara a obtener correctamente las areas a analizar se puede hacer uso de [test
 * [pdf2image](https://pypi.org/project/pdf2image/) - Convertir pdfs a imagen (Es necesario instalar poppler, Windows info en **Deployment**)
 * [GoogleAPI](https://developers.google.com/docs/api/quickstart/python) - Enlace al Quickstart para aprender lo basico
 * [Progress](https://pypi.org/project/progress/) - Barra de progreso para parecer profesionales
-Mas info en requirements.txt
+Mas info en [requirements](requirements.txt)
 
 ## Despliegue 📦
 
 _En Ubuntu creo que no deberia de haber problemas y simplemente con instalar los paquetes anteriores seía suficiente, no obstante para Windows es necesario descargar:_
-* [Tesseract](https://github.com/UB-Mannheim/tesseract/wiki) En un principio instalando esto y cambiando el configuration.json con la ruta de tesseract no deberia haber problema.
+* [Tesseract](https://github.com/UB-Mannheim/tesseract/wiki) En un principio instalando esto y cambiando el [configuration.json](configuration.json) con la ruta de tesseract no deberia haber problema.
 * [Poppler](https://poppler.freedesktop.org/) He utilizado la version 0.68.0_x86 que se puede descargar en [esta pagina](https://blog.alivate.com.au/poppler-windows/) simplemente descomprimir y asignar la ruta en configuration.json 
 
 ## Autores ✒️
