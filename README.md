@@ -28,6 +28,7 @@ De cara a obtener correctamente las áreas a analizar se puede hacer uso de [tes
 * [pdf2image](https://pypi.org/project/pdf2image/) - Convertir pdfs a imagen (Es necesario instalar poppler, Windows info en **Deployment**)
 * [GoogleAPI](https://developers.google.com/docs/api/quickstart/python) - Enlace al Quickstart para aprender lo basico
 * [Progress](https://pypi.org/project/progress/) - Barra de progreso para parecer profesionales
+
 Mas info en [requirements](requirements.txt)
 
 ## Despliegue 📦
