@@ -13,6 +13,7 @@ with open('configuration.json') as f:
   config = json.load(f)
   config = SimpleNamespace(**config)
 
+#Clase Albaran con sus def de string y dict para hacer el print y meterlo en el json
 class Albaran:
     def __init__(self,matricula,fecha,hora,page):
         self.matricula = matricula
@@ -32,7 +33,7 @@ class Albaran:
             }
         return dictio
 
-
+#Dado un albaran se encarga de guardarlo en la carpeta correspondiente, juntarlo con un pdf con el mismo nombre si es que lo hay y crear un json con la matricula y hora 
 def guardar(albaran):
 
     fecha = "/".join(albaran.fecha)
@@ -55,7 +56,7 @@ def guardar(albaran):
     #JSON -> Python
     with open(json_path) as json_file:
         data = json.load(json_file)
-    
+    #Comprobamos que ese albaran no se encuentra en el json para guardarlo
     if albaran.matricula in data.keys() and os.path.exists(path):
         if albaran.hora not in data[albaran.matricula]["horas"]:
             data[albaran.matricula]["horas"].append(albaran.hora)
@@ -77,7 +78,7 @@ def guardar(albaran):
     with open(json_path,"r+") as file:
         json.dump(data, file)
 
-
+#Dada la ruta de un pdf convertirlo a imagen y mediante los recortes realizados y la aplicacion del OCR sobre ellos crear un objeto albaran que se enviara a guardar().
 def main(PDF_file):
     ''' 
     Part #1 : Converting PDF to images 
@@ -89,13 +90,12 @@ def main(PDF_file):
         page = convert_from_path(PDF_file, 600,poppler_path=poppler_path) 
     else:
         page = convert_from_path(PDF_file, 600) 
-    # Store all the pages of the PDF in a variable 
     
     page=page[0]
 
-
     err=False
 
+    #Realizamos los recortes, los pixeles estan en relacion al tamaño de la pag para poder escalarla y que se mantenga la posicion
     width, height = page.size
     matricula = page.crop((0, height*0.461933, width*0.6773, height*0.513259)) 
     fecha = page.crop((width*0.854862,0,width,height*0.06843456))

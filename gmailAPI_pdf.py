@@ -49,7 +49,7 @@ def main(pathPDFS):
 
             msg = service.users().messages().get(userId='me', id=message['id']).execute()
             for part in msg['payload'].get('parts', ''):
-
+                
                 if part['filename']:
                     if 'data' in part['body']:
                         data = part['body']['data']

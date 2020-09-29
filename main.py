@@ -26,7 +26,7 @@ if __name__ == '__main__':
     #Metodo llamada a readmail (Futuro bucle cada dia por ejemplo)
     gmailAPI_pdf.main(pathPDFS)
 
-
+    #Lista todos los elementos .pdf de la carpeta pathPDFS
     pdfs = glob(os.path.join(pathPDFS,"*.{}".format("pdf")))
     print(pdfs)
     #Dividir todos los PDF importados en pdf de 1 hoja
@@ -61,6 +61,7 @@ if __name__ == '__main__':
         os.remove(os.path.join(pdf))
     bar.finish()
 
+    #Borra los pdf originales que estaban en la carpeta leidos
     for leidos in os.listdir(pathleidos):
         os.remove(os.path.join(pathleidos, leidos))
     os.rmdir(pathleidos)

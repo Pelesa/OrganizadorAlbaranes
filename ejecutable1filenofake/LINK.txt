@@ -1,1 +1,3 @@
-YA LO PONDRE EN MEGA O ALGO QUE PESA MUCHO PARA SUBIRLO AQUI
+https://mega.nz/file/nNxjzAQY#yBlTfem8cQHvRSBQrDllryCqHRdjaRNy0_yICgx_HbQ
+
+necesitais tener el poppler y el tesseract en la misma carpeta de ejecucion asi como el token de google
